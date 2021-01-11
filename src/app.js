@@ -21,6 +21,10 @@ const deleteMessage = require('./actions/deleteMessage');
 const { keepAlive, cancelKeepAlive } = require('./utils/keepAlive');
 const sendWhitebitMessage = require('./exchanges/whitebit/sendMessage');
 
+expressApp.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
 expressApp.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });

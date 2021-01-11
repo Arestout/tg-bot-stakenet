@@ -4,7 +4,8 @@
   "description": "Telegram bot for Stakenet",
   "main": "src/app.js",
   "scripts": {
-    "start": "nodemon src/app.js --trace-warnings"
+    "start": "node src/app.js",
+    "start:dev": "nodemon src/app.js --trace-warnings"
   },
   "author": "Arestout",
   "license": "ISC",
