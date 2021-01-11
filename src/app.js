@@ -13,6 +13,7 @@ const expressApp = express();
 const startBot = require('./commands/start');
 const help = require('./commands/help');
 const depth = require('./commands/depth');
+const stop = require('./commands/stop');
 
 const goBack = require('./actions/goBack');
 const whitebitDepth = require('./actions/whitebitDepth');
@@ -40,6 +41,7 @@ bot.start((ctx) => {
   chatId = ctx.chat.id;
   startBot(ctx, webSocket);
 });
+stop(bot, webSocket);
 help(bot);
 depth(bot);
 
@@ -65,7 +67,7 @@ webSocket.on('error', function error(error) {
 webSocket.on('message', async function incoming(data) {
   const parsedData = JSON.parse(data);
 
-  if (parsedData.id === 0) {
+  if (parsedData.id === 0 || parsedData.id === 10) {
     console.log(parsedData);
   }
 
