@@ -1,3 +1,5 @@
+const getWhitebitMarketDepth = require('../exchanges/whitebit/marketDepth');
+
 const depth = (bot) => {
   bot.command('d', async (ctx) => {
     const commandWithMessage = ctx.message.text;
@@ -9,7 +11,7 @@ const depth = (bot) => {
     }
 
     try {
-      const response = await getWhitebitData(depth);
+      const response = await getWhitebitMarketDepth(depth);
       const image = await convertToImage(response);
       return ctx.replyWithPhoto({ source: image });
     } catch (error) {

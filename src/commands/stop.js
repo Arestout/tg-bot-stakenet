@@ -5,7 +5,7 @@ const unsubscribeRequest = {
 };
 
 const stop = (bot, webSocket) => {
-  bot.stop((ctx) => {
+  bot.command('stop', (ctx) => {
     webSocket.send(JSON.stringify(unsubscribeRequest));
     ctx.reply('Bot has stopped');
   });
