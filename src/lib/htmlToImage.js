@@ -83,6 +83,7 @@ const convertToImage = async (data) => {
 </div>
       </body></html>`,
     content: { asks: data.asks, bids: data.bids },
+    puppeteerArgs: { args: ['--no-sandbox'] },
   });
 
   // const imagePath = await saveImage(image);
