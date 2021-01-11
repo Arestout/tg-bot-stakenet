@@ -1,3 +1,3 @@
-const { TELEGRAM_TOKEN } = require('./config');
+const { TELEGRAM_TOKEN, PORT } = require('./config');
 
-module.exports = { TELEGRAM_TOKEN };
+module.exports = { TELEGRAM_TOKEN, PORT };
