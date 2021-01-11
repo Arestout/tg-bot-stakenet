@@ -1,0 +1,23 @@
+{
+  "name": "telegram-stakenet",
+  "version": "1.0.0",
+  "description": "Telegram bot for Stakenet",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "nodemon src/app.js --trace-warnings"
+  },
+  "author": "Arestout",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "node-html-to-image": "^3.1.0",
+    "socket.io": "^3.0.5",
+    "telegraf": "^3.38.0",
+    "ws": "^7.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
