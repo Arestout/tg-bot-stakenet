@@ -1,4 +1,5 @@
 const getWhitebitMarketDepth = require('../exchanges/whitebit/marketDepth');
+const convertToImage = require('../lib/htmlToImage');
 
 const depth = (bot) => {
   bot.command('d', async (ctx) => {
