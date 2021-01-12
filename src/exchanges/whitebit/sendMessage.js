@@ -10,7 +10,7 @@ const generateEmoji = (type, tradeValue, minValue) => {
 
 const sendWhitebitMessage = (telegram, chatId, parsedData) => {
   const { price, amount, type } = parsedData;
-  const minValue = 100;
+  const minValue = 200;
   const tradeValue = (price * amount).toFixed(2);
 
   if (tradeValue < minValue) {
