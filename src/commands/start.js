@@ -4,6 +4,7 @@ const {
 
 const startBot = (ctx, webSocket) => {
   subscribeToMarketTrades(webSocket);
+  console.log('Bot has started');
   ctx.reply('Bot has started!');
 };
 
