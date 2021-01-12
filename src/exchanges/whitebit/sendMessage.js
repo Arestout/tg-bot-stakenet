@@ -8,7 +8,7 @@ const generateEmoji = (type, tradeValue, minValue) => {
   return emoji;
 };
 
-const sendWhitebitMessage = (telegram, parsedData) => {
+const sendWhitebitMessage = (telegram, chatId, parsedData) => {
   const { price, amount, type } = parsedData;
   const minValue = 100;
   const tradeValue = (price * amount).toFixed(2);

@@ -73,7 +73,7 @@ webSocket.on('message', async function incoming(data) {
 
   if (parsedData.params) {
     console.log(parsedData.params[1][0]);
-    sendWhitebitMessage(telegram, parsedData.params[1][0]);
+    sendWhitebitMessage(telegram, chatId, parsedData.params[1][0]);
   }
 });
 
