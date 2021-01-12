@@ -20,6 +20,9 @@ const deleteMessage = require('./actions/deleteMessage');
 
 const { keepAlive, cancelKeepAlive } = require('./utils/keepAlive');
 const sendWhitebitMessage = require('./exchanges/whitebit/sendMessage');
+const {
+  subscribeToMarketTrades,
+} = require('./exchanges/whitebit/marketTrades');
 
 expressApp.get('/', (req, res) => {
   res.send('Hello World!');
@@ -35,6 +38,7 @@ bot.catch((err, ctx) => {
 
 let chatId;
 let webSocket;
+let receiveMessageFlag = false;
 
 const connect = () => {
   webSocket = new WebSocket('wss://api.whitebit.com/ws');
@@ -42,9 +46,10 @@ const connect = () => {
   webSocket.on('open', function open() {
     console.log('WebSocket opened');
     keepAlive(webSocket);
+    subscribeToMarketTrades(webSocket);
   });
-  webSocket.on('error', function error() {
-    console.log('socket error');
+  webSocket.on('error', function error(error) {
+    console.log('socket error ' + error.message);
   });
   webSocket.on('close', function close(code, reason) {
     console.log(`Disconnected: ${code} ${reason}`);
@@ -57,9 +62,13 @@ connect();
 // Commands
 bot.start((ctx) => {
   chatId = ctx.chat.id;
+  receiveMessageFlag = true;
   startBot(ctx, webSocket);
 });
-stop(bot, webSocket);
+bot.command('stop', (ctx) => {
+  receiveMessageFlag = false;
+  stop(webSocket, ctx);
+});
 help(bot);
 depth(bot);
 
@@ -77,6 +86,11 @@ webSocket.on('message', async function incoming(data) {
 
   if (parsedData.params) {
     console.log(parsedData.params[1][0]);
+
+    if (!receiveMessageFlag) {
+      return;
+    }
+
     sendWhitebitMessage(telegram, chatId, parsedData.params[1][0]);
   }
 });
