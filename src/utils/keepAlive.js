@@ -1,3 +1,5 @@
+const axios = require('axois');
+
 let timerId;
 
 const pingRequest = {
@@ -8,7 +10,7 @@ const pingRequest = {
 
 function keepAlive(webSocket) {
   const timeout = 50000;
-  fetch('https://arcane-fjord-86920.herokuapp.com/');
+  axios.get('https://arcane-fjord-86920.herokuapp.com/');
   webSocket.send(JSON.stringify(pingRequest));
   timerId = setTimeout(keepAlive.bind(this, webSocket), timeout);
 }
