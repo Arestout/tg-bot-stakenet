@@ -61,6 +61,7 @@ connect();
 // Commands
 bot.start((ctx) => {
   chatId = ctx.chat.id;
+  console.log(chatId);
   startBot(ctx, webSocket);
 });
 bot.command('stop', (ctx) => {
