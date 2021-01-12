@@ -20,9 +20,6 @@ const deleteMessage = require('./actions/deleteMessage');
 
 const { keepAlive, cancelKeepAlive } = require('./utils/keepAlive');
 const sendWhitebitMessage = require('./exchanges/whitebit/sendMessage');
-const {
-  subscribeToMarketTrades,
-} = require('./exchanges/whitebit/marketTrades');
 
 expressApp.get('/', (req, res) => {
   res.send('Hello World!');
@@ -37,7 +34,25 @@ bot.catch((err, ctx) => {
 });
 
 let chatId;
-let webSocket = new WebSocket('wss://api.whitebit.com/ws');
+let webSocket;
+
+const connect = () => {
+  webSocket = new WebSocket('wss://api.whitebit.com/ws');
+
+  webSocket.on('open', function open() {
+    console.log('WebSocket opened');
+    keepAlive(webSocket);
+  });
+  webSocket.on('error', function error() {
+    console.log('socket error');
+  });
+  webSocket.on('close', function close(code, reason) {
+    console.log(`Disconnected: ${code} ${reason}`);
+    cancelKeepAlive();
+    setTimeout(connect, 1000);
+  });
+};
+connect();
 
 // Commands
 bot.start((ctx) => {
@@ -52,23 +67,6 @@ depth(bot);
 whitebitDepth(bot);
 goBack(bot);
 deleteMessage(bot);
-
-webSocket.on('open', function open() {
-  keepAlive(webSocket);
-  console.log('WebSocket opened');
-});
-
-webSocket.on('close', function close(code, reason) {
-  console.log(`Disconnected: ${code} ${reason}`);
-  cancelKeepAlive();
-  webSocket = new WebSocket('wss://api.whitebit.com/ws');
-  subscribeToMarketTrades(webSocket);
-  keepAlive(webSocket);
-});
-
-webSocket.on('error', function error(error) {
-  console.log(error);
-});
 
 webSocket.on('message', async function incoming(data) {
   const parsedData = JSON.parse(data);

@@ -10,10 +10,15 @@ const pingRequest = {
 
 function keepAlive(webSocket) {
   const timeout = 50000;
+
   axios
     .get('https://arcane-fjord-86920.herokuapp.com/')
     .catch((err) => console.log(err.message));
-  webSocket.send(JSON.stringify(pingRequest));
+
+  if (webSocket.readyState == 1) {
+    webSocket.send(JSON.stringify(pingRequest));
+  }
+
   timerId = setTimeout(keepAlive.bind(this, webSocket), timeout);
 }
 

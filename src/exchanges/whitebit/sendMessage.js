@@ -13,7 +13,7 @@ const sendWhitebitMessage = (telegram, chatId, parsedData) => {
   const minValue = 100;
   const tradeValue = (price * amount).toFixed(2);
 
-  if (price * tradeValue < minValue) {
+  if (tradeValue < minValue) {
     return;
   }
 
@@ -34,6 +34,7 @@ const sendWhitebitMessage = (telegram, chatId, parsedData) => {
 
     <a href="https://whitebit.com/trade/XSN_USDT">Whitebit</a>
     `;
+
   telegram.sendMessage(chatId, response, {
     parse_mode: 'HTML',
     disable_web_page_preview: true,

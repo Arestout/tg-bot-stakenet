@@ -4,7 +4,20 @@ const subscribeToMarketTrades = (webSocket) => {
     method: 'trades_subscribe',
     params: ['XSN_USDT'],
   };
+  const timeout = 100;
+  let timerId;
+  console.log(webSocket.readyState);
+  if (webSocket.readyState != 1) {
+    timerId = setTimeout(
+      subscribeToMarketTrades.bind(this, webSocket),
+      timeout
+    );
+    return;
+  }
 
+  if (timerId) {
+    clearTimeout(timerId);
+  }
   webSocket.send(JSON.stringify(subscribeRequest));
 };
 
