@@ -1,11 +1,9 @@
-const subscribeRequest = {
-  id: 9,
-  method: 'trades_subscribe',
-  params: ['XSN_USDT'],
-};
+const {
+  subscribeToMarketTrades,
+} = require('../exchanges/whitebit/marketTrades');
 
-const startBot = (ctx, socket) => {
-  socket.send(JSON.stringify(subscribeRequest));
+const startBot = (ctx, webSocket) => {
+  subscribeToMarketTrades(webSocket);
   ctx.reply('Bot has started!');
 };
 

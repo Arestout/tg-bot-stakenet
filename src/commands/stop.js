@@ -1,12 +1,10 @@
-const unsubscribeRequest = {
-  id: 10,
-  method: 'trades_unsubscribe',
-  params: [],
-};
+const {
+  unsubscribeFromMarketTrades,
+} = require('../exchanges/whitebit/marketTrades');
 
 const stop = (bot, webSocket) => {
   bot.command('stop', (ctx) => {
-    webSocket.send(JSON.stringify(unsubscribeRequest));
+    unsubscribeFromMarketTrades(webSocket);
     ctx.reply('Bot has stopped');
   });
 };

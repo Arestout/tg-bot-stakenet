@@ -7,7 +7,6 @@ const { TELEGRAM_TOKEN, PORT } = require('./config');
 
 const bot = new Telegraf(TELEGRAM_TOKEN);
 const telegram = new Telegram(TELEGRAM_TOKEN);
-const webSocket = new WebSocket('wss://api.whitebit.com/ws');
 const expressApp = express();
 
 const startBot = require('./commands/start');
@@ -21,6 +20,9 @@ const deleteMessage = require('./actions/deleteMessage');
 
 const { keepAlive, cancelKeepAlive } = require('./utils/keepAlive');
 const sendWhitebitMessage = require('./exchanges/whitebit/sendMessage');
+const {
+  subscribeToMarketTrades,
+} = require('./exchanges/whitebit/marketTrades');
 
 expressApp.get('/', (req, res) => {
   res.send('Hello World!');
@@ -35,6 +37,7 @@ bot.catch((err, ctx) => {
 });
 
 let chatId;
+let webSocket = new WebSocket('wss://api.whitebit.com/ws');
 
 // Commands
 bot.start((ctx) => {
@@ -56,8 +59,11 @@ webSocket.on('open', function open() {
 });
 
 webSocket.on('close', function close(code, reason) {
-  cancelKeepAlive();
   console.log(`Disconnected: ${code} ${reason}`);
+  cancelKeepAlive();
+  webSocket = new WebSocket('wss://api.whitebit.com/ws');
+  subscribeToMarketTrades(webSocket);
+  keepAlive(webSocket);
 });
 
 webSocket.on('error', function error(error) {
