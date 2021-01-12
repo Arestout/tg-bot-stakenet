@@ -3,7 +3,7 @@ const Telegram = require('telegraf/telegram');
 const WebSocket = require('ws');
 const express = require('express');
 
-const { TELEGRAM_TOKEN, PORT } = require('./config');
+const { TELEGRAM_TOKEN, PORT, CHAT_ID } = require('./config');
 
 const bot = new Telegraf(TELEGRAM_TOKEN);
 const telegram = new Telegram(TELEGRAM_TOKEN);
@@ -36,7 +36,7 @@ bot.catch((err, ctx) => {
   console.log(`Ooops, encountered an error for ${ctx.updateType}`, err);
 });
 
-let chatId;
+let chatId = CHAT_ID;
 let webSocket;
 
 const connect = () => {

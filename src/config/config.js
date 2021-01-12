@@ -8,4 +8,5 @@ dotenv.config({
 module.exports = {
   TELEGRAM_TOKEN: process.env.TELEGRAM_TOKEN,
   PORT: process.env.PORT || 5000,
+  CHAT_ID: process.env.CHAT_ID,
 };
