@@ -38,7 +38,6 @@ bot.catch((err, ctx) => {
 
 let chatId;
 let webSocket;
-let receiveMessageFlag = false;
 
 const connect = () => {
   webSocket = new WebSocket('wss://api.whitebit.com/ws');
@@ -62,13 +61,13 @@ connect();
 // Commands
 bot.start((ctx) => {
   chatId = ctx.chat.id;
-  receiveMessageFlag = true;
   startBot(ctx, webSocket);
 });
 bot.command('stop', (ctx) => {
-  receiveMessageFlag = false;
   stop(webSocket, ctx);
 });
+bot.on('new_chat_members', (ctx) => console.log('new members'));
+bot.on('left_chat_member', (ctx) => console.log('left members'));
 help(bot);
 depth(bot);
 
@@ -86,10 +85,6 @@ webSocket.on('message', async function incoming(data) {
 
   if (parsedData.params) {
     console.log(parsedData.params[1][0]);
-
-    if (!receiveMessageFlag) {
-      return;
-    }
 
     sendWhitebitMessage(telegram, chatId, parsedData.params[1][0]);
   }
