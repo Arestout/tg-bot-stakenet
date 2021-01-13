@@ -10,8 +10,6 @@ const { keepAlive, cancelKeepAlive } = require('../../utils/keepAlive');
 const telegram = new Telegram(TELEGRAM_TOKEN);
 
 const chatId = CHAT_ID;
-// const chatId = process.env.CHAT_TEST_ID;
-const chatId = process.env.CHAT_ID;
 
 const connectToSocket = (exchange, address) => {
   const webSocket = new WebSocket(address);
