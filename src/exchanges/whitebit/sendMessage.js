@@ -25,13 +25,13 @@ const sendWhitebitMessage = (telegram, chatId, parsedData) => {
 
   const emoji = generateEmoji(type, tradeValue, minValue);
   const response = `
-    ${type.toUpperCase()} TRANSACTION
+  ${type.toUpperCase()} TRANSACTION
 
     ${emoji}
     
-    ${amount.toFixed(2)} XSN - ${
+    ${Number(amount).toFixed(2)} XSN - ${
     type === 'sell' ? 'sold' : 'bought'
-  } for - ${price.toFixed(2)} USDT
+  } for - ${Number(price).toFixed(2)} USDT
     Total value: ${tradeValue} $
 
     <a href="https://whitebit.com/trade/XSN_USDT">Whitebit</a>`;

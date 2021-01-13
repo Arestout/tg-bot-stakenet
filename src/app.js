@@ -1,12 +1,9 @@
 const { Telegraf } = require('telegraf');
-const Telegram = require('telegraf/telegram');
-const WebSocket = require('ws');
 const express = require('express');
 
 const { TELEGRAM_TOKEN, PORT, CHAT_ID } = require('./config');
 
 const bot = new Telegraf(TELEGRAM_TOKEN);
-const telegram = new Telegram(TELEGRAM_TOKEN);
 const expressApp = express();
 
 const startBot = require('./commands/start');
@@ -19,11 +16,7 @@ const goBack = require('./actions/goBack');
 const whitebitDepth = require('./actions/whitebitDepth');
 const deleteMessage = require('./actions/deleteMessage');
 
-const { keepAlive, cancelKeepAlive } = require('./utils/keepAlive');
-const sendWhitebitMessage = require('./exchanges/whitebit/sendMessage');
-const {
-  subscribeToMarketTrades,
-} = require('./exchanges/whitebit/marketTrades');
+const connectToSocket = require('./lib/sockets/connect');
 
 expressApp.get('/', (req, res) => {
   res.send('Hello World!');
@@ -38,26 +31,9 @@ bot.catch((err, ctx) => {
 });
 
 let chatId = CHAT_ID;
-let webSocket;
 
-const connect = () => {
-  webSocket = new WebSocket('wss://api.whitebit.com/ws');
-
-  webSocket.on('open', function open() {
-    console.log('WebSocket opened');
-    keepAlive(webSocket);
-    subscribeToMarketTrades(webSocket);
-  });
-  webSocket.on('error', function error(error) {
-    console.log('socket error ' + error.message);
-  });
-  webSocket.on('close', function close(code, reason) {
-    console.log(`Disconnected: ${code} ${reason}`);
-    cancelKeepAlive();
-    setTimeout(connect, 1000);
-  });
-};
-connect();
+// Sockets
+connectToSocket('whitebit', 'wss://api.whitebit.com/ws');
 
 // Commands
 bot.start((ctx) => {
@@ -76,20 +52,6 @@ serviceMessages(bot);
 whitebitDepth(bot);
 goBack(bot);
 deleteMessage(bot);
-
-webSocket.on('message', async function incoming(data) {
-  const parsedData = JSON.parse(data);
-
-  if (parsedData.id === 0 || parsedData.id === 10) {
-    console.log(parsedData);
-  }
-
-  if (parsedData.params) {
-    console.log(parsedData.params[1][0]);
-
-    sendWhitebitMessage(telegram, chatId, parsedData.params[1][0]);
-  }
-});
 
 bot.launch();
 
