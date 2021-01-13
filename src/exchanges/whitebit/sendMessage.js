@@ -29,11 +29,12 @@ const sendWhitebitMessage = (telegram, chatId, parsedData) => {
 
     ${emoji}
     
-    ${amount} XSN - ${type === 'sell' ? 'sold' : 'bought'} for - ${price} USDT
+    ${amount.toFixed(2)} XSN - ${
+    type === 'sell' ? 'sold' : 'bought'
+  } for - ${price.toFixed(2)} USDT
     Total value: ${tradeValue} $
 
-    <a href="https://whitebit.com/trade/XSN_USDT">Whitebit</a>
-    `;
+    <a href="https://whitebit.com/trade/XSN_USDT">Whitebit</a>`;
 
   telegram.sendMessage(chatId, response, {
     parse_mode: 'HTML',

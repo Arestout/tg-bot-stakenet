@@ -13,6 +13,7 @@ const startBot = require('./commands/start');
 const help = require('./commands/help');
 const depth = require('./commands/depth');
 const stop = require('./commands/stop');
+const serviceMessages = require('./commands/serviceMessages');
 
 const goBack = require('./actions/goBack');
 const whitebitDepth = require('./actions/whitebitDepth');
@@ -67,10 +68,9 @@ bot.start((ctx) => {
 bot.command('stop', (ctx) => {
   stop(webSocket, ctx);
 });
-bot.on('new_chat_members', (ctx) => console.log('new members'));
-bot.on('left_chat_member', (ctx) => console.log('left members'));
 help(bot);
 depth(bot);
+serviceMessages(bot);
 
 // Actions
 whitebitDepth(bot);
