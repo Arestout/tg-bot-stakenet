@@ -11,8 +11,5 @@ module.exports = {
       ? process.env.TELEGRAM_TEST_TOKEN
       : process.env.TELEGRAM_TOKEN,
   PORT: process.env.PORT || 5000,
-  CHAT_ID:
-    process.env.NODE_ENV === 'development'
-      ? process.env.CHAT_TEST_ID
-      : process.env.CHAT_ID,
+  CHAT_ID: process.env.CHAT_ID,
 };
