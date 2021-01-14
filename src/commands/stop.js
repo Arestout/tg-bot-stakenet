@@ -1,11 +1,8 @@
-const {
-  unsubscribeFromMarketTrades,
-} = require('../exchanges/whitebit/marketTrades');
-
-const stop = (webSocket, ctx) => {
-  unsubscribeFromMarketTrades(webSocket);
-  console.log('Bot has stopped');
-  ctx.reply('Bot has stopped');
+const stop = (bot) => {
+  bot.command('stop', (ctx) => {
+    console.log('Bot has stopped');
+    ctx.reply('Bot has stopped');
+  });
 };
 
 module.exports = stop;

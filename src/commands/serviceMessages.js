@@ -5,7 +5,15 @@ const deleteMessage = (ctx) => {
 };
 
 const serviceMessages = (bot) => {
-  bot.on('new_chat_members', (ctx) => deleteMessage(ctx));
+  bot.on('new_chat_members', (ctx) => {
+    try {
+      console.log(ctx);
+      console.log(ctx.message);
+      ctx.forEach((ctx) => deleteMessage(ctx));
+    } catch (error) {
+      console.log(error);
+    }
+  });
   bot.on('left_chat_member', (ctx) => deleteMessage(ctx));
 };
 

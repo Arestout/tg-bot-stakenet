@@ -15,4 +15,5 @@ module.exports = {
     process.env.NODE_ENV === 'development'
       ? process.env.CHAT_TEST_ID
       : process.env.CHAT_ID,
+  SERVER_LINK: process.env.SERVER_LINK,
 };

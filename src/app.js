@@ -1,10 +1,8 @@
 const { Telegraf } = require('telegraf');
-const express = require('express');
 
-const { TELEGRAM_TOKEN, PORT, CHAT_ID } = require('./config');
+const { TELEGRAM_TOKEN, CHAT_ID } = require('./config');
 
 const bot = new Telegraf(TELEGRAM_TOKEN);
-const expressApp = express();
 
 const startBot = require('./commands/start');
 const help = require('./commands/help');
@@ -16,15 +14,12 @@ const goBack = require('./actions/goBack');
 const whitebitDepth = require('./actions/whitebitDepth');
 const deleteMessage = require('./actions/deleteMessage');
 
+const startServer = require('./lib/express');
 const connectToSocket = require('./lib/sockets/connect');
 
-expressApp.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-expressApp.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'development') {
+  startServer();
+}
 
 bot.catch((err, ctx) => {
   console.log(`Ooops, encountered an error for ${ctx.updateType}`, err);
@@ -34,16 +29,16 @@ let chatId = CHAT_ID;
 
 // Sockets
 connectToSocket('whitebit', 'wss://api.whitebit.com/ws');
+// connectToSocket('bitfinex', 'wss://api-pub.bitfinex.com/ws/2');
 
 // Commands
 bot.start((ctx) => {
   chatId = ctx.chat.id;
   console.log(chatId);
-  startBot(ctx, webSocket);
+  startBot(ctx);
 });
-bot.command('stop', (ctx) => {
-  stop(webSocket, ctx);
-});
+
+stop(bot);
 help(bot);
 depth(bot);
 serviceMessages(bot);

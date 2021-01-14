@@ -1,6 +1,6 @@
 const sendWhitebitMessage = require('./sendMessage');
 
-const onSocketMessage = (telegram, chatId, parsedData) => {
+const onSocketMessageWhitebit = (telegram, chatId, parsedData) => {
   if (parsedData.id === 0 || parsedData.id === 10) {
     console.log(parsedData);
   }
@@ -12,4 +12,4 @@ const onSocketMessage = (telegram, chatId, parsedData) => {
   }
 };
 
-module.exports = onSocketMessage;
+module.exports = onSocketMessageWhitebit;

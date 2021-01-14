@@ -1,9 +1,4 @@
-const {
-  subscribeToMarketTrades,
-} = require('../exchanges/whitebit/marketTrades');
-
-const startBot = (ctx, webSocket) => {
-  subscribeToMarketTrades(webSocket);
+const startBot = (ctx) => {
   console.log('Bot has started');
   ctx.reply('Bot has started!');
 };
