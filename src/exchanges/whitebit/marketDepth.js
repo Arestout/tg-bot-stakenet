@@ -31,7 +31,7 @@ const getWhitebitMarketDepthSocket = async (depth) => {
   const marketDepthRequest = {
     id: 11,
     method: 'depth_request',
-    params: ['XSN_USDT', marketDepth, '0'],
+    params: ['XSN_USDT', marketDepth, '2'],
   };
 
   webSocket.send(JSON.stringify(marketDepthRequest));
