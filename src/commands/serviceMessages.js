@@ -9,7 +9,7 @@ const serviceMessages = (bot) => {
     try {
       console.log('chat new members: ', ctx.message.new_chat_members);
       console.log('chat message: ', ctx.message);
-      deleteMessage(ctx);
+      deleteMessage(ctx.message);
     } catch (error) {
       console.log(error);
     }
