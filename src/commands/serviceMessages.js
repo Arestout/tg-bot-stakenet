@@ -1,20 +1,10 @@
 const deleteMessage = (ctx) => {
-  let chatId = ctx.chat.id;
-  let msgId = ctx.message_id;
-  ctx.deleteMessage(chatId, msgId);
+  const { message_id } = ctx.message;
+  ctx.deleteMessage(message_id);
 };
 
 const serviceMessages = (bot) => {
-  bot.on('new_chat_members', (ctx) => {
-    try {
-      console.log('chat new members: ', ctx.message.new_chat_members);
-      console.log('chat message: ', ctx.message);
-
-      ctx.deleteMessage(ctx.message.chat.id, ctx.message.message_id);
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  bot.on('new_chat_members', (ctx) => deleteMessage(ctx));
   bot.on('left_chat_member', (ctx) => deleteMessage(ctx));
 };
 
