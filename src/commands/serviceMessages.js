@@ -7,9 +7,9 @@ const deleteMessage = (ctx) => {
 const serviceMessages = (bot) => {
   bot.on('new_chat_members', (ctx) => {
     try {
-      console.log(ctx);
-      console.log(ctx.message);
-      ctx.forEach((ctx) => deleteMessage(ctx));
+      console.log('chat new members: ', ctx.message.new_chat_members);
+      console.log('chat message: ', ctx.message);
+      deleteMessage(ctx);
     } catch (error) {
       console.log(error);
     }
