@@ -1,6 +1,6 @@
-const { Telegraf } = require('telegraf');
-
 const { TELEGRAM_TOKEN, CHAT_ID } = require('./config');
+
+const { Telegraf } = require('telegraf');
 
 const bot = new Telegraf(TELEGRAM_TOKEN);
 
