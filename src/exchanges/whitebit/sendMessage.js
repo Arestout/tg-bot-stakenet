@@ -1,4 +1,5 @@
 const { addToCache, checkCache } = require('../../utils/cache');
+const { MIN_VALUE } = require('../../config');
 
 const generateEmoji = (type, tradeValue, minValue) => {
   const emojiType = type === 'sell' ? '&#x1F534;' : '&#x1F7E2';
@@ -10,7 +11,7 @@ const generateEmoji = (type, tradeValue, minValue) => {
 
 const sendWhitebitMessage = (telegram, chatId, parsedData) => {
   const { price, amount, type } = parsedData;
-  const minValue = 300;
+  const minValue = MIN_VALUE;
   const tradeValue = (price * amount).toFixed(2);
 
   if (tradeValue < minValue) {
