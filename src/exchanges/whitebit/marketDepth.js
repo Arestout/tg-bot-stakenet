@@ -18,7 +18,14 @@ const getWhitebitMarketDepth = async (depth) => {
   try {
     const { data } = await axios.get(url);
 
-    return data;
+    const marketDepth = {
+      asks: data.asks,
+      bids: data.bids,
+      exchange: 'Whitebit',
+      currency: 'USDT',
+    };
+
+    return marketDepth;
   } catch (error) {
     console.log(error.message);
     throw new Error(error.message);

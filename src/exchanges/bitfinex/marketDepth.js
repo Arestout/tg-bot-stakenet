@@ -24,10 +24,13 @@ const getBitfinexMarketDepth = async (market = 'tXSNUSD') => {
   try {
     const { data } = await axios.get(API_PATH);
     const modifiedData = data.map((item) => [item[0], item[2]]);
+    const currency = market.slice(-3);
 
     const marketDepth = {
       bids: modifiedData.slice(0, 99),
       asks: modifiedData.slice(100),
+      exchange: 'Bitfinex',
+      currency,
     };
 
     return marketDepth;

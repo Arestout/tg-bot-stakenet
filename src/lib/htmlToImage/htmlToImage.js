@@ -6,19 +6,27 @@ Handlebars.registerHelper('print_data', function () {
 });
 
 const convertToImage = async (data) => {
+  const { asks, bids, exchange, currency } = data;
+
   const image = await nodeHtmlToImage({
     html: `<html>
       <head>
       <style>
       * {
         margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .title {
+        text-align: center;
+        margin: 10px;
+        padding: 10px;
       }
       
       .wrapper {
         display: flex;
-        width: 600px;
-        margin: 10px auto;
-        font-family: Arial, sans-serif;
+        justify-content: center;
+        margin: 10px;
       }
       
       .asks {
@@ -47,6 +55,7 @@ const convertToImage = async (data) => {
       </style>
     </head>
       <body>
+      <h2 class="title">{{exchange}} {{currency}}</h1>
       <div class="wrapper">
     <div class="asks">
       <p class="title"><strong>Asks</strong></p>
@@ -65,7 +74,7 @@ const convertToImage = async (data) => {
     </div>
 </div>
       </body></html>`,
-    content: { asks: data.asks, bids: data.bids },
+    content: { asks, bids, exchange, currency },
     puppeteerArgs: { args: ['--no-sandbox'] },
   });
 
