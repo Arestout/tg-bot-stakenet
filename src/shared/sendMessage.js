@@ -22,6 +22,10 @@ const sendMessage = (telegram, chatId, parsedData) => {
     return;
   }
 
+  if (exchange === 'Bitfinex') {
+    console.log({ parsedData });
+  }
+
   addToCache(id);
 
   const emoji = generateEmoji(type, tradeValue, minValue);

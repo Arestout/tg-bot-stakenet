@@ -30,17 +30,18 @@ const onSocketMessageBitfinex = (telegram, chatId, parsedData) => {
   console.log(parsedData);
 
   const [id, messageType, trade] = parsedData;
-  const [amount, price] = trade.splice(2);
-  const type = amount > 0 ? 'buy' : 'sell';
 
-  const data = {
-    id,
-    price,
-    amount: Math.abs(amount),
-    type,
-    exchange: 'Bitfinex',
-  };
   if (id === channelUSDid && messageType === 'tu') {
+    const [amount, price] = trade.splice(2);
+    const type = amount > 0 ? 'buy' : 'sell';
+    const data = {
+      id,
+      price,
+      amount: Math.abs(amount),
+      type,
+      exchange: 'Bitfinex',
+    };
+    console.log({ data });
     sendMessage(telegram, chatId, data);
   }
 };
