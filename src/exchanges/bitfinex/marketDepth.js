@@ -18,7 +18,7 @@ if AMOUNT > 0 then bid else ask
 
 */
 
-const getBitfinexMarketDepth = async (market = 'tBTCUSD') => {
+const getBitfinexMarketDepth = async (market = 'tXSNUSD') => {
   const API_PATH = `https://api-pub.bitfinex.com/v2/book/${market}/P0?len=100`;
 
   try {
