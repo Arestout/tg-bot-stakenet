@@ -36,7 +36,7 @@ const onSocketMessageBitfinex = (telegram, chatId, parsedData) => {
   const data = {
     id,
     price,
-    amount,
+    amount: Math.abs(amount),
     type,
     exchange: 'Bitfinex',
   };
