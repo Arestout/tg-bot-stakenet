@@ -1,4 +1,4 @@
-const sendWhitebitMessage = require('./sendMessage');
+const sendMessage = require('../../shared/sendMessage');
 
 const onSocketMessageWhitebit = (telegram, chatId, parsedData) => {
   if (parsedData.id === 0 || parsedData.id === 10) {
@@ -8,7 +8,7 @@ const onSocketMessageWhitebit = (telegram, chatId, parsedData) => {
   if (parsedData.params) {
     console.log(parsedData.params[1][0]);
 
-    sendWhitebitMessage(telegram, chatId, parsedData.params[1][0]);
+    sendMessage(telegram, chatId, parsedData.params[1][0]);
   }
 };
 

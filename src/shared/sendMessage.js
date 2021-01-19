@@ -1,5 +1,5 @@
-const { addToCache, checkCache } = require('../../utils/cache');
-const { MIN_VALUE } = require('../../config');
+const { addToCache, checkCache } = require('./cache');
+const { MIN_VALUE } = require('../config');
 
 const generateEmoji = (type, tradeValue, minValue) => {
   const emojiType = type === 'sell' ? '&#x1F534;' : '&#x1F7E2';
@@ -9,8 +9,8 @@ const generateEmoji = (type, tradeValue, minValue) => {
   return emoji;
 };
 
-const sendWhitebitMessage = (telegram, chatId, parsedData) => {
-  const { price, amount, type } = parsedData;
+const sendMessage = (telegram, chatId, parsedData) => {
+  const { id, price, amount, type, exchange = 'Whitebit' } = parsedData;
   const minValue = Number(MIN_VALUE);
   const tradeValue = (price * amount).toFixed(2);
 
@@ -18,34 +18,41 @@ const sendWhitebitMessage = (telegram, chatId, parsedData) => {
     return;
   }
 
-  if (checkCache(parsedData.id)) {
+  if (checkCache(id)) {
     return;
   }
 
-  addToCache(parsedData.id);
+  addToCache(id);
 
   const emoji = generateEmoji(type, tradeValue, minValue);
+  const currency = exchange === 'Whitebit' ? 'USDT' : 'USD';
   const response = `
-  ${type.toUpperCase()} TRANSACTION
+  ${type.toUpperCase()} TRANSACTION on ${exchange}
 
     ${emoji}
     
     ${Number(amount).toFixed(2)} XSN - ${
     type === 'sell' ? 'sold' : 'bought'
-  } for - ${Number(price).toFixed(3)} USDT
+  } for - ${Number(price).toFixed(3)} ${currency}
     Total value: ${tradeValue} $
 
-    <a href="https://whitebit.com/trade/XSN_USDT">Whitebit</a>`;
+    | <a href="https://whitebit.com/trade/XSN_USDT">Whitebit</a> | <a href="https://trading.bitfinex.com/t/XSN:USD">Bitfinex</a> |`;
 
   telegram.sendMessage(chatId, response, {
     parse_mode: 'HTML',
     disable_web_page_preview: true,
     reply_markup: {
       inline_keyboard: [
-        [{ text: 'Market depth', callback_data: 'whitebit-usdt' }],
+        [{ text: 'Bitfinex USD market depth', callback_data: 'bitfinex-usd' }],
+        [
+          {
+            text: 'Whitebit USDT market depth',
+            callback_data: 'whitebit-usdt',
+          },
+        ],
       ],
     },
   });
 };
 
-module.exports = sendWhitebitMessage;
+module.exports = sendMessage;

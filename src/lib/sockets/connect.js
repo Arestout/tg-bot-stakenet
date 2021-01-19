@@ -4,7 +4,9 @@ const WebSocket = require('ws');
 const { CHAT_ID, TELEGRAM_TOKEN } = require('../../config');
 const subscribeToMarketTrades = require('./marketTrades');
 const onSocketMessageWhitebit = require('../../exchanges/whitebit/onSocketMessage');
+const onSocketMessageBitfinex = require('../../exchanges/bitfinex/onSocketMessage');
 const { keepAlive, cancelKeepAlive } = require('./keepAlive');
+
 const telegram = new Telegram(TELEGRAM_TOKEN);
 
 const chatId = CHAT_ID;
@@ -33,7 +35,7 @@ const connectToSocket = (exchange, address) => {
 
     const onMessageHandlers = new Map();
     onMessageHandlers.set('whitebit', onSocketMessageWhitebit);
-    onMessageHandlers.set('bitfinex', () => console.log(data));
+    onMessageHandlers.set('bitfinex', onSocketMessageBitfinex);
     const onMessage = onMessageHandlers.get(exchange);
 
     onMessage(telegram, chatId, parsedData);

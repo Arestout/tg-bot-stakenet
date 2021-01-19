@@ -1,28 +1,11 @@
 const nodeHtmlToImage = require('node-html-to-image');
-const fs = require('fs').promises;
-const path = require('path');
 const Handlebars = require('handlebars');
 
-Handlebars.registerHelper('print_person', function () {
+Handlebars.registerHelper('print_data', function () {
   return Number(this[0]).toFixed(4) + ' : ' + this[1];
 });
 
-const saveImage = async (image) => {
-  const filename = Date.now() + '.jpg';
-  const imagePath = path.resolve(__dirname, `../../tmp/${filename}`);
-
-  try {
-    await fs.writeFile(imagePath, image);
-    console.log('The file was saved!');
-
-    return imagePath;
-  } catch (error) {
-    return console.log(error);
-  }
-};
-
 const convertToImage = async (data) => {
-  console.log(data);
   const image = await nodeHtmlToImage({
     html: `<html>
       <head>
@@ -69,7 +52,7 @@ const convertToImage = async (data) => {
       <p class="title"><strong>Asks</strong></p>
       <p class="subtitle">Price : Amount</p>
       {{#each asks}}
-        <p class="price">{{print_person}}</p>
+        <p class="price">{{print_data}}</p>
       {{/each}}
         
     </div>
@@ -77,7 +60,7 @@ const convertToImage = async (data) => {
       <p class="title"><strong>Bids</strong></p>
       <p class="subtitle">Price : Amount</p>
       {{#each bids}}
-        <p class="price">{{print_person}}</p>
+        <p class="price">{{print_data}}</p>
       {{/each}}
     </div>
 </div>
@@ -85,8 +68,6 @@ const convertToImage = async (data) => {
     content: { asks: data.asks, bids: data.bids },
     puppeteerArgs: { args: ['--no-sandbox'] },
   });
-
-  // const imagePath = await saveImage(image);
 
   return image;
 };

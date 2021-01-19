@@ -7,7 +7,7 @@ const subscribeRequestCollection = {
   bitfinex: {
     event: 'subscribe',
     channel: 'trades',
-    symbol: 'tBTCUSD',
+    symbol: 'tXSNUSD',
   },
 };
 
