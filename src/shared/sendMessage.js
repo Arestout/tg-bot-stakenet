@@ -26,7 +26,7 @@ const sendMessage = (telegram, chatId, parsedData) => {
     console.log(3);
   }
 
-  if (checkCache(id)) {
+  if (checkCache(id + amount)) {
     return;
   }
 
@@ -34,7 +34,7 @@ const sendMessage = (telegram, chatId, parsedData) => {
     console.log(4);
   }
 
-  addToCache(id);
+  addToCache(id + amount);
 
   const emoji = generateEmoji(type, tradeValue, minValue);
   const currency = exchange === 'Whitebit' ? 'USDT' : 'USD';

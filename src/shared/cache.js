@@ -12,6 +12,8 @@ const addToCache = (id) => {
   }, 1000);
 };
 
-const checkCache = (id) => (cache[id] ? true : false);
+const checkCache = (id) => {
+  return cache[id] ? true : false;
+};
 
 module.exports = { addToCache, checkCache };
