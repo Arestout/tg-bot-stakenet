@@ -34,7 +34,7 @@ const marketDepth = (bot) => {
       console.log(error.message);
       ctx.reply('Something went wrong, please try again');
     } finally {
-      isFetching = false;
+      setTimeout(() => (isFetching = false), 1000);
     }
   });
 };

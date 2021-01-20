@@ -41,7 +41,8 @@ const onSocketMessageBitfinex = (telegram, chatId, parsedData) => {
       type,
       exchange: 'Bitfinex',
     };
-    console.log({ data });
+    console.log('data', data);
+    console.log(1);
     sendMessage(telegram, chatId, data);
   }
 };

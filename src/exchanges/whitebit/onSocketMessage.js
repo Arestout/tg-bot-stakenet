@@ -8,7 +8,15 @@ const onSocketMessageWhitebit = (telegram, chatId, parsedData) => {
   if (parsedData.params) {
     console.log(parsedData.params[1][0]);
 
-    sendMessage(telegram, chatId, parsedData.params[1][0]);
+    const data = {
+      id: parsedData.params[1][0].id,
+      price: parsedData.params[1][0].price,
+      amount: parsedData.params[1][0].amount,
+      type: parsedData.params[1][0].type,
+      exchange: 'Whitebit',
+    };
+
+    sendMessage(telegram, chatId, data);
   }
 };
 

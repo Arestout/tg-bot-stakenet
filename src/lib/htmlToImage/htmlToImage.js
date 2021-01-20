@@ -2,7 +2,7 @@ const nodeHtmlToImage = require('node-html-to-image');
 const Handlebars = require('handlebars');
 
 Handlebars.registerHelper('print_data', function () {
-  return Number(this[0]).toFixed(4) + ' : ' + this[1];
+  return Number(this[0]).toFixed(4) + ' : ' + Number(this[1]).toFixed(4);
 });
 
 const convertToImage = async (data) => {

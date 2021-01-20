@@ -10,20 +10,28 @@ const generateEmoji = (type, tradeValue, minValue) => {
 };
 
 const sendMessage = (telegram, chatId, parsedData) => {
-  const { id, price, amount, type, exchange = 'Whitebit' } = parsedData;
+  const { id, price, amount, type, exchange } = parsedData;
   const minValue = Number(MIN_VALUE);
   const tradeValue = (price * amount).toFixed(2);
 
+  if (exchange === 'bitfinex') {
+    console.log(2);
+  }
+
   if (tradeValue < minValue) {
     return;
+  }
+
+  if (exchange === 'bitfinex') {
+    console.log(3);
   }
 
   if (checkCache(id)) {
     return;
   }
 
-  if (exchange === 'Bitfinex') {
-    console.log({ parsedData });
+  if (exchange === 'bitfinex') {
+    console.log(4);
   }
 
   addToCache(id);
