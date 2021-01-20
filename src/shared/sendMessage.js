@@ -14,7 +14,7 @@ const sendMessage = (telegram, chatId, parsedData) => {
   const minValue = Number(MIN_VALUE);
   const tradeValue = (price * amount).toFixed(2);
 
-  if (exchange === 'bitfinex') {
+  if (exchange === 'Bitfinex') {
     console.log(2);
   }
 
@@ -22,7 +22,7 @@ const sendMessage = (telegram, chatId, parsedData) => {
     return;
   }
 
-  if (exchange === 'bitfinex') {
+  if (exchange === 'Bitfinex') {
     console.log(3);
   }
 
@@ -30,7 +30,7 @@ const sendMessage = (telegram, chatId, parsedData) => {
     return;
   }
 
-  if (exchange === 'bitfinex') {
+  if (exchange === 'Bitfinex') {
     console.log(4);
   }
 
