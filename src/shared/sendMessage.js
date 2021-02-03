@@ -14,24 +14,12 @@ const sendMessage = (telegram, chatId, parsedData) => {
   const minValue = Number(MIN_VALUE);
   const tradeValue = (price * amount).toFixed(2);
 
-  if (exchange === 'Bitfinex') {
-    console.log(2);
-  }
-
   if (tradeValue < minValue) {
     return;
   }
 
-  if (exchange === 'Bitfinex') {
-    console.log(3);
-  }
-
   if (checkCache(id + amount)) {
     return;
-  }
-
-  if (exchange === 'Bitfinex') {
-    console.log(4);
   }
 
   addToCache(id + amount);

@@ -1,18 +1,11 @@
-const express = require('express');
+const http = require('http');
 const axios = require('axios');
 
-const expressApp = express();
 const timeout = 50000;
 const { SERVER_LINK, PORT } = require('../../config');
 
 const startServer = () => {
-  expressApp.get('/', (req, res) => {
-    res.send('Hello World!');
-  });
-
-  expressApp.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
-  });
+  http.createServer((req, res) => res.end('Hello World!')).listen(PORT);
 
   function keepServerRunning() {
     axios.get(SERVER_LINK).catch((err) => console.log(err.message));

@@ -7,7 +7,7 @@ const markets = new Map([
   ['bitfinex-usd', getBitfinexMarketDepth],
 ]);
 
-const marketDepth = (bot) => {
+const marketDepth = async (bot) => {
   bot.action(['whitebit-usdt', 'bitfinex-usd'], async (ctx) => {
     const { match: market } = ctx;
 
@@ -27,9 +27,9 @@ const marketDepth = (bot) => {
       const response = await getMarketData();
       const image = await convertToImage(response);
 
-      ctx.deleteMessage(message_id);
+      await ctx.replyWithPhoto({ source: image });
 
-      return ctx.replyWithPhoto({ source: image });
+      return ctx.deleteMessage(message_id);
     } catch (error) {
       console.log(error.message);
       ctx.reply('Something went wrong, please try again');
