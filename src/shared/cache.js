@@ -1,19 +1,17 @@
 const cache = {};
 
-const deleteFromCache = (id) => {
+const remove = (id) => {
   delete cache[id];
 };
 
-const addToCache = (id) => {
+const set = (id) => {
   cache[id] = true;
 
-  setTimeout(() => {
-    deleteFromCache.bind(this, id);
-  }, 1000);
+  setTimeout(() => remove(id), 1000);
 };
 
-const checkCache = (id) => {
+const get = (id) => {
   return cache[id] ? true : false;
 };
 
-module.exports = { addToCache, checkCache };
+module.exports = { set, get, remove };

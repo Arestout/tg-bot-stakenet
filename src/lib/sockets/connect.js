@@ -11,6 +11,14 @@ const telegram = new Telegram(TELEGRAM_TOKEN);
 
 const chatId = CHAT_ID;
 
+const getMessageHandler = (exchange) => {
+  const onMessageHandlers = new Map();
+  onMessageHandlers.set('whitebit', onSocketMessageWhitebit);
+  onMessageHandlers.set('bitfinex', onSocketMessageBitfinex);
+
+  return onMessageHandlers.get(exchange);
+};
+
 const connectToSocket = (exchange, address) => {
   const webSocket = new WebSocket(address);
 
@@ -32,11 +40,7 @@ const connectToSocket = (exchange, address) => {
 
   webSocket.on('message', async function incoming(data) {
     const parsedData = JSON.parse(data);
-
-    const onMessageHandlers = new Map();
-    onMessageHandlers.set('whitebit', onSocketMessageWhitebit);
-    onMessageHandlers.set('bitfinex', onSocketMessageBitfinex);
-    const onMessage = onMessageHandlers.get(exchange);
+    const onMessage = getMessageHandler(exchange);
 
     onMessage(telegram, chatId, parsedData);
   });

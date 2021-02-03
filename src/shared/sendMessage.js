@@ -1,4 +1,4 @@
-const { addToCache, checkCache } = require('./cache');
+const cache = require('./cache');
 const { MIN_VALUE } = require('../config');
 
 const generateEmoji = (type, tradeValue, minValue) => {
@@ -18,11 +18,11 @@ const sendMessage = (telegram, chatId, parsedData) => {
     return;
   }
 
-  if (checkCache(id + amount)) {
+  if (cache.get(id + amount)) {
     return;
   }
 
-  addToCache(id + amount);
+  cache.set(id + amount);
 
   const emoji = generateEmoji(type, tradeValue, minValue);
   const currency = exchange === 'Whitebit' ? 'USDT' : 'USD';

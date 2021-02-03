@@ -13,7 +13,7 @@ const serviceMessages = require('./commands/serviceMessages');
 const goBack = require('./actions/goBack');
 const deleteMessage = require('./actions/deleteMessage');
 
-const startServer = require('./lib/express');
+const startServer = require('./lib/server');
 const connectToSocket = require('./lib/sockets/connect');
 const marketDepth = require('./actions/marketDepth');
 
