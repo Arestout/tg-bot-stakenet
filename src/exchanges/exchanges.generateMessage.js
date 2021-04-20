@@ -29,14 +29,14 @@ const generateMessage = (parsedData) => {
   const message = `
   ${type.toUpperCase()} TRANSACTION on ${exchange}
 
-    ${emoji}
+${emoji}
     
-    ${Number(amount).toFixed(2)} XSN - ${
+${Number(amount).toFixed(2)} XSN - ${
     type === 'sell' ? 'sold' : 'bought'
-  } for - ${Number(price).toFixed(3)} ${currency}
-    Total value: ${tradeValue} $
+  } for - ${Number(price).toFixed(3)} ${currency}            
+Total value: ${tradeValue} $
 
-    | <a href="https://whitebit.com/trade/XSN_USDT">Whitebit</a> | <a href="https://trading.bitfinex.com/t/XSN:USD">Bitfinex</a> |`;
+| <a href="https://whitebit.com/trade/XSN_USDT">Whitebit</a> | <a href="https://trading.bitfinex.com/t/XSN:USD">Bitfinex</a> |`;
 
   return message;
 };

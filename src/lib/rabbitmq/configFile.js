@@ -11,20 +11,21 @@ module.exports = {
         },
       },
       // exchanges: ['transactions_exchange'],
-      queues: ['whale_transactions_queue'],
+      queues: ['transactions_queue'],
       // bindings: [
-      //   'transactions_exchange[whale_transaction] -> whale_transactions_queue',
+      //   'transactions_exchange[whale_transaction] -> transactions_queue',
+      //   'transactions_exchange[burn_transaction] -> transactions_queue',
       // ],
       // publications: {
       //   bot_publisher: {
       //     vhost: 'v1',
       //     exchange: 'transactions_exchange',
-      //     routingKey: 'whale_transaction',
+      //     routingKey: 'burn_transaction',
       //   },
       // },
       subscriptions: {
         exchange_bot_subscriber: {
-          queue: 'whale_transactions_queue',
+          queue: 'transactions_queue',
           prefetch: 1,
         },
       },
