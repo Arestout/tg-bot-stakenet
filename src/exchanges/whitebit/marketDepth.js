@@ -1,4 +1,4 @@
-const axios = require('axios');
+const apiRequest = require('../../shared/apiRequest');
 
 const HOSTNAME = 'https://whitebit.com';
 const API_PATH = '/api/v4/public/orderbook/XSN_USDT';
@@ -16,7 +16,7 @@ const getWhitebitMarketDepth = async (depth) => {
   const url = `${HOSTNAME}${API_PATH}?depth=${marketDepth}&level=2`;
 
   try {
-    const { data } = await axios.get(url);
+    const data = await apiRequest(url);
 
     const marketDepth = {
       asks: data.asks,

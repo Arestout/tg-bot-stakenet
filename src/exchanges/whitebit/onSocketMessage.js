@@ -1,6 +1,7 @@
 const sendMessage = require('../../shared/sendMessage');
+const generateMessage = require('../exchanges.generateMessage');
 
-const onSocketMessageWhitebit = (telegram, chatId, parsedData) => {
+const onSocketMessageWhitebit = (parsedData) => {
   if (parsedData.id === 0 || parsedData.id === 10) {
     console.log(parsedData);
   }
@@ -16,7 +17,11 @@ const onSocketMessageWhitebit = (telegram, chatId, parsedData) => {
       exchange: 'Whitebit',
     };
 
-    sendMessage(telegram, chatId, data);
+    const message = generateMessage(data);
+
+    if (message) {
+      sendMessage(message);
+    }
   }
 };
 

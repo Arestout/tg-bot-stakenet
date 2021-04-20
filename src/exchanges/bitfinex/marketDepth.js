@@ -1,4 +1,4 @@
-const axios = require('axios');
+const apiRequest = require('../../shared/apiRequest');
 
 /*
 Bitfinex response
@@ -22,7 +22,7 @@ const getBitfinexMarketDepth = async (market = 'tXSNUSD') => {
   const API_PATH = `https://api-pub.bitfinex.com/v2/book/${market}/P0?len=100`;
 
   try {
-    const { data } = await axios.get(API_PATH);
+    const data = await apiRequest(API_PATH);
     const modifiedData = data.map((item) => [item[0], item[2]]);
     const currency = market.slice(-3);
 

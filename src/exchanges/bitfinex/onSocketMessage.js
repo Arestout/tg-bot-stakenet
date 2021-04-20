@@ -1,4 +1,5 @@
 const sendMessage = require('../../shared/sendMessage');
+const generateMessage = require('../exchanges.generateMessage');
 
 /* 
 [
@@ -17,7 +18,7 @@ Amount bought (positive) or sold (negative).
 
 let channelUSDid;
 
-const onSocketMessageBitfinex = (telegram, chatId, parsedData) => {
+const onSocketMessageBitfinex = (parsedData) => {
   if (parsedData.event && parsedData.pair === 'XSNUSD') {
     channelUSDid = parsedData.chanId;
     return;
@@ -26,8 +27,6 @@ const onSocketMessageBitfinex = (telegram, chatId, parsedData) => {
   if (parsedData.event && parsedData.event === 'pong') return;
   if (parsedData.event && parsedData.event === 'info') return;
   if (parsedData.length < 3) return;
-
-  console.log(parsedData);
 
   const [id, messageType, trade] = parsedData;
 
@@ -42,7 +41,11 @@ const onSocketMessageBitfinex = (telegram, chatId, parsedData) => {
       exchange: 'Bitfinex',
     };
 
-    sendMessage(telegram, chatId, data);
+    const message = generateMessage(data);
+
+    if (message) {
+      sendMessage(message);
+    }
   }
 };
 

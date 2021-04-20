@@ -1,23 +1,14 @@
-const Telegram = require('telegraf/telegram');
 const WebSocket = require('ws');
 
-const { CHAT_ID, TELEGRAM_TOKEN } = require('../../config');
 const subscribeToMarketTrades = require('./marketTrades');
 const onSocketMessageWhitebit = require('../../exchanges/whitebit/onSocketMessage');
 const onSocketMessageBitfinex = require('../../exchanges/bitfinex/onSocketMessage');
 const { keepAlive, cancelKeepAlive } = require('./keepAlive');
 
-const telegram = new Telegram(TELEGRAM_TOKEN);
-
-const chatId = CHAT_ID;
-
-const getMessageHandler = (exchange) => {
-  const onMessageHandlers = new Map();
-  onMessageHandlers.set('whitebit', onSocketMessageWhitebit);
-  onMessageHandlers.set('bitfinex', onSocketMessageBitfinex);
-
-  return onMessageHandlers.get(exchange);
-};
+const onMessageHandlers = new Map([
+  ['whitebit', onSocketMessageWhitebit],
+  ['bitfinex', onSocketMessageBitfinex],
+]);
 
 const connectToSocket = (exchange, address) => {
   const webSocket = new WebSocket(address);
@@ -40,9 +31,11 @@ const connectToSocket = (exchange, address) => {
 
   webSocket.on('message', async function incoming(data) {
     const parsedData = JSON.parse(data);
-    const onMessage = getMessageHandler(exchange);
+    const onMessageHandler = onMessageHandlers.get(exchange);
 
-    onMessage(telegram, chatId, parsedData);
+    if (onMessageHandler) {
+      onMessageHandler(parsedData);
+    }
   });
 };
 

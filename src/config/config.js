@@ -17,4 +17,5 @@ module.exports = {
       : process.env.CHAT_ID,
   SERVER_LINK: process.env.SERVER_LINK,
   MIN_VALUE: process.env.MIN_VALUE,
+  RABBITMQ_HOST: process.env.RABBITMQ_HOST,
 };

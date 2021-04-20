@@ -16,6 +16,7 @@ const deleteMessage = require('./actions/deleteMessage');
 const startServer = require('./lib/server');
 const connectToSocket = require('./lib/sockets/connect');
 const marketDepth = require('./actions/marketDepth');
+const { initRabbitMQ } = require('./lib/rabbitmq/rabbitmq.config');
 
 if (process.env.NODE_ENV !== 'development') {
   startServer();
@@ -30,6 +31,9 @@ let chatId = CHAT_ID;
 // Sockets
 connectToSocket('whitebit', 'wss://api.whitebit.com/ws');
 connectToSocket('bitfinex', 'wss://api-pub.bitfinex.com/ws/2');
+
+// RabbitMQ
+initRabbitMQ();
 
 // Commands
 bot.start((ctx) => {
