@@ -1,7 +1,6 @@
 const Broker = require('rascal').BrokerAsPromised;
 const config = require('./configFile');
 const sendMessage = require('../../shared/sendMessage');
-const { composeAsync } = require('../../shared/compose');
 const getTransactionValueInUSD = require('./utils/getTransactionValueInUSD');
 
 const generateWhaleTransactionMessage = require('./messages/whaleTransaction.message');
@@ -17,15 +16,6 @@ async function initRabbitMQ() {
     const broker = await Broker.create(config);
     broker.on('error', console.error);
 
-    // const message = {
-    //   transactionAmount: 15000,
-    //   transactionHash:
-    //     '9c6319c6c17592fc4388a5abbd822132f2312f80dbff8eef6c94e1aefa490ab6',
-    // };
-
-    // const publication = await broker.publish('bot_publisher', message);
-    // publication.on('error', console.error);
-
     const subscription = await broker.subscribe('exchange_bot_subscriber');
     subscription
       .on('message', async (message, content, ackOrNack) => {
@@ -35,13 +25,12 @@ async function initRabbitMQ() {
           return;
         }
 
-        const handleContent = composeAsync(
-          getTransactionValueInUSD,
-          generateMessage,
-          sendMessage
-        );
-
-        await handleContent(content);
+        const transactionValueInUSD = getTransactionValueInUSD(content);
+        const messageToSend = generateMessage({
+          ...content,
+          transactionValueInUSD,
+        });
+        await sendMessage(messageToSend);
         ackOrNack();
       })
       .on('error', console.error);

@@ -1,7 +1,7 @@
 const { telegram, chatId } = require('../config/telegram');
 
-const sendMessage = (message) => {
-  telegram.sendMessage(chatId, message, {
+const sendMessage = async (message) => {
+  await telegram.sendMessage(chatId, message, {
     parse_mode: 'HTML',
     disable_web_page_preview: true,
     reply_markup: {
