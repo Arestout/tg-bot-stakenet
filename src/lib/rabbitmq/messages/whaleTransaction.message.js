@@ -1,13 +1,13 @@
 const generateWhaleTransactionMessage = (content) => {
-  const { transactionAmount, transactionHash, transactionValueInUSD } = content;
+  const { transactionValue, transactionId, transactionValueInUSD } = content;
 
   const message = `
-'&#x1f40b;'  WHALE ALERT  '&#x1f40b;'
+&#x1f40b;  WHALE ALERT  &#x1f40b;
   
-${Number(transactionAmount).toFixed(2)} XSN have been moved!
+${Number(transactionValue).toFixed(2)} XSN have been moved!
 Total value: ${transactionValueInUSD} $
   
-| <a href='https://xsnexplorer.io/transactions/${transactionHash}'>Transaction</a> |`;
+| <a href='https://xsnexplorer.io/transactions/${transactionId}'>Transaction</a> |`;
 
   return message;
 };
