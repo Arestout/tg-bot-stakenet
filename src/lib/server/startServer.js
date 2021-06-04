@@ -5,7 +5,9 @@ const { SERVER_LINK, PORT } = require('../../config');
 const apiRequest = require('../../shared/apiRequest');
 
 const startServer = () => {
-  http.createServer((req, res) => res.end('Hello World!')).listen(PORT);
+  http
+    .createServer((req, res) => res.end(JSON.stringify('Hello World!')))
+    .listen(PORT);
 
   function keepServerRunning() {
     apiRequest(SERVER_LINK).catch((err) => console.log(err.message));

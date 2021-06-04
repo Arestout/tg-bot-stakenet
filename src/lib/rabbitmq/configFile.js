@@ -2,12 +2,12 @@ const { RABBITMQ_HOST } = require('../../config/config');
 
 module.exports = {
   vhosts: {
-    v1: {
+    lsgwaoxk: {
       connection: {
         url: RABBITMQ_HOST,
         heartbeat: 1,
         socketOptions: {
-          timeout: 1000,
+          timeout: 3000,
         },
       },
       queues: ['transactions_queue'],
