@@ -10,6 +10,7 @@
   "author": "Arestout",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.8.0",
     "dotenv": "^8.2.0",
     "node-html-to-image": "^3.1.0",
     "rascal": "^13.0.0",
