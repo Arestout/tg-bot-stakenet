@@ -18,6 +18,8 @@ const connectToSocket = require('./lib/sockets/connect');
 const marketDepth = require('./actions/marketDepth');
 const { initRabbitMQ } = require('./lib/rabbitmq/rabbitmq.config');
 
+// TODO replace console logging
+
 if (process.env.NODE_ENV !== 'development') {
   startServer();
 }

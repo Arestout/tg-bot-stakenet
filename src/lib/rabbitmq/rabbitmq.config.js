@@ -49,7 +49,7 @@ async function initRabbitMQ() {
         ackOrNack(err);
       });
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 }
 
