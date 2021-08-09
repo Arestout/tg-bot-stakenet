@@ -1,8 +1,10 @@
 const nodeHtmlToImage = require('node-html-to-image');
 const Handlebars = require('handlebars');
 
+const generateAmount = require('../../shared/generateAmount');
+
 Handlebars.registerHelper('print_data', function () {
-  return Number(this[0]).toFixed(4) + ' : ' + Number(this[1]).toFixed(4);
+  return generateAmount(this[0], 4) + ' : ' + generateAmount(this[1], 4);
 });
 
 const convertToImage = async (data) => {

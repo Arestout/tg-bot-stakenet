@@ -1,10 +1,12 @@
+const generateAmount = require('../../../shared/generateAmount');
+
 const generateBurnTransactionMessage = (content) => {
   const { transactionValue, transactionId, transactionValueInUSD } = content;
 
   const message = `
 &#x1f525;  BURN ALERT  &#x1f525;
     
-${Number(transactionValue).toFixed(2)} XSN ${
+${generateAmount(transactionValue, 2)} XSN ${
     transactionValue <= 1 ? 'has' : 'have'
   } been burned!
 Total value: ${transactionValueInUSD} $
