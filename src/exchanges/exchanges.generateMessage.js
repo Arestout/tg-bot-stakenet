@@ -1,7 +1,6 @@
 const cache = require('../shared/cache');
 const generateAmount = require('../shared/generateAmount');
 const { MIN_VALUE } = require('../config');
-// const MIN_VALUE = 100;
 
 const generateEmoji = (type, tradeValue, minValue) => {
   const emojiType = type === 'sell' ? '&#x1F534;' : '&#x1F7E2';
