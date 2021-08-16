@@ -13,7 +13,8 @@ const generateEmoji = (type, tradeValue, minValue) => {
 const generateMessage = (parsedData) => {
   const { id, price, amount, type, exchange } = parsedData;
   const minValue = Number(MIN_VALUE);
-  const tradeValue = generateAmount(price * amount, 2);
+  const tradeValue = (price * amount).toFixed(2);
+  const tradeValueLocalString = generateAmount(tradeValue, 2);
 
   if (tradeValue < minValue) {
     return;
@@ -37,7 +38,7 @@ ${emoji}
 ${currentAmount} XSN - ${
     type === 'sell' ? 'sold' : 'bought'
   } for - ${currentPrice} ${currency}            
-Total value: ${tradeValue} $
+Total value: ${tradeValueLocalString} $
 
 | <a href="https://whitebit.com/trade/XSN_USDT">Whitebit</a> | <a href="https://trading.bitfinex.com/t/XSN:USD">Bitfinex</a> |`;
 
