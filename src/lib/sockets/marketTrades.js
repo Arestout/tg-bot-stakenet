@@ -2,7 +2,7 @@ const subscribeRequestCollection = {
   whitebit: {
     id: 9,
     method: 'trades_subscribe',
-    params: ['XSN_USDT'],
+    params: ['HDX_USDT'],
   },
   bitfinex: {
     event: 'subscribe',

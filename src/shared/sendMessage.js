@@ -6,7 +6,6 @@ const sendMessage = async (message) => {
     disable_web_page_preview: true,
     reply_markup: {
       inline_keyboard: [
-        [{ text: 'Bitfinex USD market depth', callback_data: 'bitfinex-usd' }],
         [
           {
             text: 'Whitebit USDT market depth',

@@ -1,18 +1,14 @@
 const getWhitebitMarketDepth = require('../exchanges/whitebit/marketDepth');
-const getBitfinexMarketDepth = require('../exchanges/bitfinex/marketDepth');
 const convertToImage = require('../lib/htmlToImage');
 
-const FETCHING_TIMEOUT = 60000;
+const FETCHING_TIMEOUT = 60000 * 5; // 5 mins
 
-const markets = new Map([
-  ['whitebit-usdt', getWhitebitMarketDepth],
-  ['bitfinex-usd', getBitfinexMarketDepth],
-]);
+const markets = new Map([['whitebit-usdt', getWhitebitMarketDepth]]);
 
 const fetchingMarkets = [];
 
 const marketDepth = async (bot) => {
-  bot.action(['whitebit-usdt', 'bitfinex-usd'], async (ctx) => {
+  bot.action(['whitebit-usdt'], async (ctx) => {
     const { match: market } = ctx;
 
     if (fetchingMarkets.includes(market)) {
@@ -20,9 +16,7 @@ const marketDepth = async (bot) => {
     }
 
     try {
-      const { message_id } = await ctx.reply(
-        `Loading ${market} market depth...`
-      );
+      const { message_id } = await ctx.reply(`Loading ${market} market depth...`);
 
       fetchingMarkets.push(market);
       const getMarketData = markets.get(market);
@@ -36,10 +30,7 @@ const marketDepth = async (bot) => {
       console.log(error.message);
       ctx.reply('Something went wrong, please try again');
     } finally {
-      setTimeout(
-        () => fetchingMarkets.splice(fetchingMarkets.indexOf(market)),
-        FETCHING_TIMEOUT
-      );
+      setTimeout(() => fetchingMarkets.splice(fetchingMarkets.indexOf(market)), FETCHING_TIMEOUT);
     }
   });
 };

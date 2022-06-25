@@ -32,16 +32,16 @@ let chatId = CHAT_ID;
 
 // Sockets
 connectToSocket('whitebit', 'wss://api.whitebit.com/ws');
-connectToSocket('bitfinex', 'wss://api-pub.bitfinex.com/ws/2');
+// connectToSocket('bitfinex', 'wss://api-pub.bitfinex.com/ws/2');
 
-// RabbitMQ
-initRabbitMQ()
-  .then(() => {
-    console.log('RabbitMQ initialized');
-  })
-  .catch((error) => {
-    console.log(error.message);
-  });
+// RabbitMQ;
+// initRabbitMQ()
+//   .then(() => {
+//     console.log('RabbitMQ initialized');
+//   })
+//   .catch((error) => {
+//     console.log(error.message);
+//   });
 
 // Commands
 bot.start((ctx) => {

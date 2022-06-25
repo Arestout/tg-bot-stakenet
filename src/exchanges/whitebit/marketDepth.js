@@ -1,7 +1,7 @@
 const apiRequest = require('../../shared/apiRequest');
 
 const HOSTNAME = 'https://whitebit.com';
-const API_PATH = '/api/v4/public/orderbook/XSN_USDT';
+const API_PATH = '/api/v4/public/orderbook/HDX_USDT';
 
 const whitebitDepth = {
   5: true,
@@ -38,7 +38,7 @@ const getWhitebitMarketDepthSocket = async (depth) => {
   const marketDepthRequest = {
     id: 11,
     method: 'depth_request',
-    params: ['XSN_USDT', marketDepth, '2'],
+    params: ['HDX_USDT', marketDepth, '2'],
   };
 
   webSocket.send(JSON.stringify(marketDepthRequest));
